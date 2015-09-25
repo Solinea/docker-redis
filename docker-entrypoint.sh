@@ -15,4 +15,10 @@
 
 set -e
 
-exec "$@"
+if [ "$@" ]; then
+  exec "$@"
+elif [ "$REDIS_PORT" ]; then
+  exec redis-server --port ${REDIS_PORT}
+else
+  exec redis-server
+fi

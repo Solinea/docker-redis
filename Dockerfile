@@ -18,6 +18,8 @@ RUN pkgList=' \
 ENV REDIS_VERSION 3.0.4
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-$REDIS_VERSION.tar.gz
 ENV REDIS_PORT 6379
+ENV REDIS_CONFIG_DIR /etc/redis
+ENV REDIS_DATA_DIR /var/lib/redis
 
 RUN buildDeps=' \
     build-essential \
@@ -42,13 +44,13 @@ RUN buildDeps=' \
 RUN groupadd -r redis && useradd -r -d /var/redis -g redis redis
 
 # create config directory
-RUN mkdir /etc/redis && chown redis:redis /etc/redis
-VOLUME /etc/redis
+RUN mkdir $REDIS_CONFIG_DIR && chown redis:redis $REDIS_CONFIG_DIR
+VOLUME $REDIS_CONFIG_DIR
 
 # create data directory
-RUN mkdir /var/redis && chown redis:redis /var/redis
-VOLUME /var/redis
-WORKDIR /var/redis
+RUN mkdir $REDIS_DATA_DIR && chown redis:redis $REDIS_DATA_DIR
+VOLUME $REDIS_DATA_DIR
+WORKDIR $REDIS_DATA_DIR
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
@@ -56,5 +58,5 @@ USER redis
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 6379
-CMD [ "redis-server" ]
+EXPOSE $REDIS_PORT
+CMD [ ]

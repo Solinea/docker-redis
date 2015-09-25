@@ -10,3 +10,10 @@ Redis running on a minimal Debian base image.
 Create a Dockerfile with the following content:
 
     FROM solinea/redis
+
+# Volumes
+
+Volume         | Description
+---------------|--------------
+/etc/redis     | Configuration
+/var/lib/redis | Data
