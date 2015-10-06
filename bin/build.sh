@@ -15,12 +15,10 @@
 
 IMAGE_NAME=solinea/redis
 
-TOP_DIR=${GS_PROJ_TOP_DIR:-${PROJECT_HOME}/docker-redis}
 GIT_BRANCH=$(git symbolic-ref --short HEAD)
 GIT_COMMIT=$(git rev-parse --short HEAD)
 TAG=""
 
-cd $TOP_DIR || exit 1
 
 for arg in "$@" ; do
     case $arg in
@@ -39,6 +37,10 @@ for arg in "$@" ; do
         ;;
     esac
 done
+
+# are we in the right directory?
+[ -f Dockerfile ] \
+    || { echo "No Dockerfile.  Run from the top of the repo." && exit 1 ; }
 
 # is docker-tag-naming installed?
 pip freeze | grep 'docker-tag-naming' > /dev/null \
