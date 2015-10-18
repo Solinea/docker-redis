@@ -2,7 +2,7 @@
 
 # Adapted from https://github.com/docker-library/redis/tree/master/3.0
 
-FROM solinea/debian
+FROM solinea-docker-community.artifactoryonline.com/debian:jessie
 
 MAINTAINER Luke Heidecke <luke@solinea.com>
 
